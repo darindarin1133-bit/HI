@@ -1,0 +1,472 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GUY BXO | Cosmic Universe</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #02020b;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  overflow: hidden;
+}
+
+.universe {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  min-height: 480px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    radial-gradient(ellipse at 50% 50%,
+      rgba(30, 22, 100, .35), transparent 55%),
+    radial-gradient(ellipse at 15% 80%,
+      rgba(0, 95, 255, .20), transparent 45%),
+    radial-gradient(ellipse at 85% 20%,
+      rgba(175, 0, 255, .19), transparent 45%),
+    #02020b;
+}
+
+/* Animated galaxy clouds */
+
+.nebula {
+  position: absolute;
+  inset: -35%;
+  z-index: -1;
+  pointer-events: none;
+  filter: blur(48px);
+  opacity: .68;
+  background:
+    radial-gradient(ellipse at 25% 40%,
+      rgba(0, 110, 255, .46), transparent 25%),
+    radial-gradient(ellipse at 70% 55%,
+      rgba(145, 0, 255, .40), transparent 27%),
+    radial-gradient(ellipse at 48% 78%,
+      rgba(255, 0, 170, .20), transparent 22%);
+  animation: nebulaMove 18s ease-in-out infinite alternate;
+}
+
+@keyframes nebulaMove {
+  from { transform: translate(-3%, -2%) rotate(0deg) scale(1); }
+  to   { transform: translate(3%, 2%) rotate(12deg) scale(1.12); }
+}
+
+/* Canvas effects */
+
+#space {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Main content */
+
+.content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  padding: 24px;
+  text-align: center;
+  perspective: 900px;
+}
+
+.eyebrow {
+  color: #b8caff;
+  font-size: clamp(9px, 1.5vw, 12px);
+  letter-spacing: .65em;
+  text-transform: uppercase;
+  margin-bottom: 25px;
+  text-shadow: 0 0 16px #4b83ff;
+  animation: fadeIn 2s ease both;
+}
+
+.logo {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+  transform-style: preserve-3d;
+  animation: logoFloat 5s ease-in-out infinite;
+}
+
+.title {
+  font-size: clamp(48px, 12vw, 150px);
+  font-weight: 1000;
+  line-height: .95;
+  letter-spacing: -.065em;
+  white-space: nowrap;
+  background: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    #d9e6ff 19%,
+    #7ab7ff 38%,
+    #3473ff 57%,
+    #9a39ff 78%,
+    #e7c5ff 100%
+  );
+  background-size: 100% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(210, 225, 255, .4);
+  filter:
+    drop-shadow(0 0 5px rgba(100, 170, 255, .9))
+    drop-shadow(0 0 18px rgba(40, 100, 255, .8))
+    drop-shadow(0 0 45px rgba(150, 30, 255, .55));
+  animation: textShine 5s ease-in-out infinite;
+}
+
+@keyframes textShine {
+  0%, 100% { background-position: 50% 0%; }
+  50% { background-position: 50% 100%; }
+}
+
+@keyframes logoFloat {
+  0%, 100% { transform: translateY(0) rotateX(0deg); }
+  50% { transform: translateY(-9px) rotateX(2deg); }
+}
+
+/* Light rays behind the text */
+
+.rays {
+  position: absolute;
+  z-index: -1;
+  width: 125%;
+  height: 170%;
+  left: -12.5%;
+  top: -35%;
+  pointer-events: none;
+  opacity: .45;
+  background: conic-gradient(
+    from 0deg at 50% 50%,
+    transparent 0deg,
+    rgba(45, 112, 255, .12) 12deg,
+    transparent 26deg,
+    rgba(175, 60, 255, .14) 42deg,
+    transparent 57deg,
+    rgba(30, 200, 255, .10) 75deg,
+    transparent 95deg,
+    rgba(150, 60, 255, .10) 125deg,
+    transparent 155deg
+  );
+  filter: blur(25px);
+  animation: raySpin 35s linear infinite;
+}
+
+@keyframes raySpin {
+  to { transform: rotate(360deg); }
+}
+
+/* Rotating cosmic rings */
+
+.ring {
+  position: absolute;
+  width: 125%;
+  height: 42%;
+  left: -12.5%;
+  top: 29%;
+  border: 1px solid rgba(64, 156, 255, .65);
+  border-radius: 50%;
+  box-shadow:
+    0 0 9px rgba(0, 145, 255, .65),
+    inset 0 0 12px rgba(150, 0, 255, .35);
+  transform: rotateX(68deg) rotateZ(-12deg);
+  pointer-events: none;
+}
+
+.ring.one {
+  animation: orbitOne 12s linear infinite;
+}
+
+.ring.two {
+  width: 115%;
+  left: -7.5%;
+  border-color: rgba(201, 98, 255, .55);
+  transform: rotateX(68deg) rotateZ(28deg);
+  animation: orbitTwo 16s linear infinite;
+}
+
+@keyframes orbitOne {
+  from { transform: rotateX(68deg) rotateZ(-12deg) rotate(0deg); }
+  to { transform: rotateX(68deg) rotateZ(-12deg) rotate(360deg); }
+}
+
+@keyframes orbitTwo {
+  from { transform: rotateX(68deg) rotateZ(28deg) rotate(360deg); }
+  to { transform: rotateX(68deg) rotateZ(28deg) rotate(0deg); }
+}
+
+/* INSIDE subtitle */
+
+.subtitle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(12px, 3vw, 38px);
+  margin-top: 27px;
+  color: #eef5ff;
+  font-size: clamp(12px, 2vw, 19px);
+  font-weight: 700;
+  letter-spacing: clamp(.35em, 1.5vw, .85em);
+  padding-left: .85em;
+  text-shadow: 0 0 8px #fff, 0 0 25px #347bff;
+  animation: subtitleGlow 3s ease-in-out infinite alternate;
+}
+
+.subtitle::before,
+.subtitle::after {
+  content: "";
+  display: block;
+  width: clamp(25px, 9vw, 110px);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #49aaff, #fff);
+  box-shadow: 0 0 12px #267fff;
+}
+
+.subtitle::after {
+  transform: rotate(180deg);
+}
+
+@keyframes subtitleGlow {
+  from { opacity: .65; }
+  to { opacity: 1; }
+}
+
+/* Small footer */
+
+.footer {
+  margin-top: 42px;
+  color: rgba(198, 211, 255, .55);
+  font-size: 9px;
+  letter-spacing: .45em;
+  text-transform: uppercase;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 500px) {
+  .content { padding: 12px; }
+  .title { letter-spacing: -.07em; }
+  .ring { width: 160%; left: -30%; }
+  .ring.two { width: 145%; left: -22.5%; }
+  .footer { letter-spacing: .22em; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nebula, .logo, .title, .rays,
+  .ring, .subtitle, .eyebrow {
+    animation-duration: 30s;
+  }
+}
+</style>
+</head>
+
+<body>
+<main class="universe">
+  <div class="nebula"></div>
+  <canvas id="space"></canvas>
+
+  <div class="rays"></div>
+  <div class="ring one"></div>
+  <div class="ring two"></div>
+
+  <section class="content">
+    <div class="eyebrow">✦ Welcome to another universe ✦</div>
+
+    <div class="logo">
+      <h1 class="title">GUY BXO</h1>
+    </div>
+
+    <div class="subtitle">INSIDE</div>
+
+    <div class="footer">
+      Beyond the stars · Beyond imagination
+    </div>
+  </section>
+</main>
+
+<script>
+const canvas = document.getElementById("space");
+const ctx = canvas.getContext("2d");
+
+let w, h, stars = [], rain = [], sparks = [];
+let lightning = 0;
+let nextLightning = 150;
+let frame = 0;
+
+function resize() {
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  w = window.innerWidth;
+  h = window.innerHeight;
+
+  canvas.width = Math.round(w * dpr);
+  canvas.height = Math.round(h * dpr);
+  canvas.style.width = w + "px";
+  canvas.style.height = h + "px";
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+  stars = Array.from(
+    { length: Math.min(180, Math.floor(w * h / 4500)) },
+    () => ({
+      x: Math.random() * w,
+      y: Math.random() * h,
+      r: Math.random() * 1.6 + .2,
+      a: Math.random(),
+      speed: Math.random() * .025 + .006
+    })
+  );
+
+  rain = Array.from(
+    { length: Math.min(150, Math.floor(w / 7)) },
+    () => ({
+      x: Math.random() * w,
+      y: Math.random() * h,
+      len: Math.random() * 17 + 7,
+      speed: Math.random() * 7 + 5,
+      a: Math.random() * .3 + .08
+    })
+  );
+}
+
+function drawStars() {
+  for (const s of stars) {
+    s.a += s.speed;
+    const glow = .3 + Math.abs(Math.sin(s.a)) * .7;
+
+    ctx.beginPath();
+    ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(205,225,255,${glow})`;
+    ctx.shadowBlur = s.r > 1 ? 12 : 3;
+    ctx.shadowColor = "#6e9dff";
+    ctx.fill();
+    ctx.shadowBlur = 0;
+
+    if (Math.sin(s.a) > .985 && s.r > 1) {
+      ctx.strokeStyle = `rgba(180,210,255,${glow})`;
+      ctx.lineWidth = .6;
+      ctx.beginPath();
+      ctx.moveTo(s.x - 5, s.y);
+      ctx.lineTo(s.x + 5, s.y);
+      ctx.moveTo(s.x, s.y - 5);
+      ctx.lineTo(s.x, s.y + 5);
+      ctx.stroke();
+    }
+  }
+}
+
+function drawRain() {
+  ctx.lineWidth = .8;
+
+  for (const r of rain) {
+    r.y += r.speed;
+    r.x -= r.speed * .12;
+
+    if (r.y > h + 20 || r.x < -20) {
+      r.y = -20;
+      r.x = Math.random() * (w + 40);
+    }
+
+    ctx.strokeStyle = `rgba(105,160,255,${r.a})`;
+    ctx.beginPath();
+    ctx.moveTo(r.x, r.y);
+    ctx.lineTo(r.x - r.len * .15, r.y + r.len);
+    ctx.stroke();
+  }
+}
+
+function drawSparks() {
+  if (Math.random() < .16) {
+    sparks.push({
+      x: Math.random() * w,
+      y: h + 5,
+      vx: (Math.random() - .5) * 1.5,
+      vy: -Math.random() * 3 - 1,
+      life: 1,
+      size: Math.random() * 2 + .5
+    });
+  }
+
+  for (let i = sparks.length - 1; i >= 0; i--) {
+    const p = sparks[i];
+    p.x += p.vx;
+    p.y += p.vy;
+    p.life -= .009;
+
+    ctx.fillStyle = `rgba(150,130,255,${Math.max(0,p.life)})`;
+    ctx.shadowBlur = 12;
+    ctx.shadowColor = "#8a4dff";
+    ctx.fillRect(p.x, p.y, p.size, p.size);
+    ctx.shadowBlur = 0;
+
+    if (p.life <= 0) sparks.splice(i, 1);
+  }
+}
+
+function drawLightning() {
+  if (lightning > 0) {
+    ctx.fillStyle = `rgba(95,130,255,${lightning * .035})`;
+    ctx.fillRect(0, 0, w, h);
+
+    ctx.save();
+    ctx.globalCompositeOperation = "lighter";
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = `rgba(155,190,255,${lightning / 9})`;
+    ctx.shadowBlur = 24;
+    ctx.shadowColor = "#4e8dff";
+
+    let x = Math.random() * w;
+    ctx.beginPath();
+    ctx.moveTo(x, 0);
+
+    for (let y = 0; y < h * .72; y += 22) {
+      x += (Math.random() - .5) * 85;
+      ctx.lineTo(x, y);
+    }
+
+    ctx.stroke();
+    ctx.restore();
+    lightning--;
+  }
+
+  if (frame > nextLightning) {
+    lightning = Math.floor(Math.random() * 5) + 3;
+    nextLightning = frame + 100 + Math.random() * 240;
+  }
+}
+
+function animate() {
+  frame++;
+  ctx.clearRect(0, 0, w, h);
+
+  drawStars();
+  drawRain();
+  drawSparks();
+  drawLightning();
+
+  requestAnimationFrame(animate);
+}
+
+window.addEventListener("resize", resize);
+resize();
+animate();
+</script>
+</body>
+</html>
